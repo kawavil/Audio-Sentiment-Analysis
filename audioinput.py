@@ -3,14 +3,12 @@ import os
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
 import speech_recognition as sr
-# a function that splits the audio file into chunks
-# and applies speech recognition
+
 r = sr.Recognizer()
 
 
 def get_large_audio_transcription(path):
     lines = []
-    # open the audio file using pydub
     sound = AudioSegment.from_wav(path)
     # split audio sound where silence is 700 miliseconds or more and get chunks
     chunks = split_on_silence(sound,
@@ -48,8 +46,6 @@ def get_large_audio_transcription(path):
     return lines
 
 path = "./Data/test.wav"
-#print("\nFull text:", get_large_audio_transcription(path))
 lines = get_large_audio_transcription(path)
-print(*lines, sep='\n')
 my_df = pd.DataFrame(lines)
-my_df.to_csv('./Data/AudioToText.csv', index=False, header=['Summary'])
+my_df.to_csv('./Data/Transcripted.csv', index=False)
